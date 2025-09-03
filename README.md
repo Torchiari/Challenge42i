@@ -90,7 +90,7 @@ cd frontend
 npm run dev
 ```
 
-Luego abrir en el navegador: [http://localhost:3000](http://localhost:3000)
+Luego abrir en el navegador: [http://localhost:3001](http://localhost:3001)
 
 ---
 

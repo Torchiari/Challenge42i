@@ -36,7 +36,7 @@ export default function TaskList({
   onDelete,
 }: Props) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-neutral-700 shadow-lg">
+    <div className="overflow-x-auto rounded-2xl border border-neutral-700 shadow-lg">
       <table className="min-w-full table-auto bg-neutral-900 text-white">
         <thead className="bg-neutral-800">
           <tr>

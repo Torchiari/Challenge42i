@@ -19,12 +19,15 @@ export default function TaskForm({
   const [priority, setPriority] = useState<TaskPriority | "">(task?.priority || "");
   const [estimate, setEstimate] = useState<number>(task?.estimate ?? 0);
 
+  const [subtasks, setSubtasks] = useState<{ title: string }[]>(task?.subtasks || []);
+
   useEffect(() => {
     setTitle(task?.title || "");
     setDescription(task?.description || "");
     setStatus(task?.status || "Backlog");
     setPriority(task?.priority || "");
     setEstimate(task?.estimate ?? 0);
+    setSubtasks(task?.subtasks || []);
   }, [task]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -32,12 +35,6 @@ export default function TaskForm({
     if (!title.trim()) return;
     onSubmit({ title, description, status, priority: priority || undefined, estimate });
   };
-
-  const [subtasks, setSubtasks] = useState<{ title: string }[]>(task?.subtasks || []);
-
-  useEffect(() => {
-    setSubtasks(task?.subtasks || []);
-  }, [task]);
 
   return (
     <form
@@ -59,43 +56,47 @@ export default function TaskForm({
         className="w-full rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-2 text-white placeholder-neutral-400 focus:ring-2 focus:ring-blue-500"
       />
 
-      <select
-        value={status}
-        onChange={(e) => setStatus(e.target.value as TaskStatus)}
-        className="w-full rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-2 text-white focus:ring-2 focus:ring-blue-500"
-      >
-        <option value="Backlog">Backlog</option>
-        <option value="Unstarted">Unstarted</option>
-        <option value="Started">Started</option>
-        <option value="Completed">Completed</option>
-        <option value="Canceled">Canceled</option>
-      </select>
+      <div className="flex flex-col sm:flex-row gap-3">
+        <select
+          value={status}
+          onChange={(e) => setStatus(e.target.value as TaskStatus)}
+          className="w-full sm:w-1/2 rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-2 text-white focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="Backlog">Backlog</option>
+          <option value="Unstarted">Unstarted</option>
+          <option value="Started">Started</option>
+          <option value="Completed">Completed</option>
+          <option value="Canceled">Canceled</option>
+        </select>
 
-      <select
-        value={priority}
-        onChange={(e) => setPriority(e.target.value as TaskPriority)}
-        className="w-full rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-2 text-white focus:ring-2 focus:ring-blue-500"
-      >
-        <option value="">-- Prioridad --</option>
-        <option value="Low">Low</option>
-        <option value="Medium">Medium</option>
-        <option value="High">High</option>
-        <option value="Urgent">Urgent</option>
-      </select>
+        <select
+          value={priority}
+          onChange={(e) => setPriority(e.target.value as TaskPriority)}
+          className="w-full sm:w-1/2 rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-2 text-white focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">-- Prioridad --</option>
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+          <option value="Urgent">Urgent</option>
+        </select>
+      </div>
 
-      <input
-        type="number"
-        min={0}
-        placeholder="Estimado"
-        value={estimate}
-        onChange={(e) => setEstimate(Number(e.target.value))}
-        className="w-full rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-2 text-white placeholder-neutral-400 focus:ring-2 focus:ring-blue-500"
-      />
+      <div className="flex flex-col space-y-1">
+  <label className="text-white font-medium">Tiempo estimado</label>
+  <input
+    type="number"
+    min={0}
+    placeholder="0"
+    value={estimate}
+    onChange={(e) => setEstimate(Number(e.target.value))}
+    className="w-full rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-2 text-white placeholder-neutral-400 focus:ring-2 focus:ring-blue-500"
+  />
+</div>
       <div className="space-y-2">
-
         <h3 className="text-white font-semibold">Subtareas</h3>
         {subtasks.map((subtask, index) => (
-          <div key={index} className="flex gap-2">
+          <div key={index} className="flex flex-col sm:flex-row gap-2">
             <input
               type="text"
               placeholder="Título subtarea"
@@ -110,7 +111,7 @@ export default function TaskForm({
             <button
               type="button"
               onClick={() => setSubtasks(subtasks.filter((_, i) => i !== index))}
-              className="px-3 py-2 bg-red-600 rounded-lg text-white"
+              className="px-3 py-2 bg-red-600 rounded-lg text-white hover:bg-red-700 transition"
             >
               X
             </button>

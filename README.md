@@ -18,7 +18,6 @@ Permite crear, actualizar, eliminar y visualizar tareas, así como consultar sub
 ## Instalación y ejecución
 
 ### 1. Clonar el repositorio
-```bash
 git clone https://github.com/Torchiari/Challenge42i.git
 
 

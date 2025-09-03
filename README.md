@@ -17,8 +17,7 @@ Permite crear, actualizar, eliminar y visualizar tareas, así como consultar sub
 ## Estructura del proyecto
 
 ```
-task-system/
-│
+
 ├─ frontend/          # Aplicación Next.js (front-end)
 │  ├─ .env.local      # Variables de entorno
 │  └─ ...
@@ -38,7 +37,6 @@ task-system/
 
 ```bash
 git clone https://github.com/Torchiari/Challenge42i.git
-cd task-system
 ```
 
 ### 2. Instalar dependencias

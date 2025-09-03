@@ -1,0 +1,15 @@
+{
+  "name": "task-system",
+  "private": true,
+  "workspaces": ["api", "web"],
+  "scripts": {
+    "dev": "concurrently \"npm --workspace=api run start:dev\" \"npm --workspace=web run dev\"",
+    "dev:api": "npm --workspace=api run start:dev",
+    "dev:web": "npm --workspace=web run dev",
+    "test": "npm --workspaces run test",
+    "lint": "npm --workspaces run lint"
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.0"
+  }
+}

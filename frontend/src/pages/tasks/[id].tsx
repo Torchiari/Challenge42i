@@ -99,7 +99,48 @@ export default function TaskDetails() {
         <div className="mt-6">
           <h3 className="font-semibold mb-3">Subtareas</h3>
           {task.subtasks && task.subtasks.length ? (
-            <TaskTree tasks={task.subtasks} />
+            <ul className="space-y-2">
+              {task.subtasks.map((sub) => (
+                <li
+                  key={sub.id}
+                  className="flex items-center justify-between rounded-lg border border-neutral-700 bg-neutral-800 p-3"
+                >
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="checkbox"
+                      checked={sub.status === "Completed"}
+                      onChange={async () => {
+                        await handleUpdate({
+                          subtasks: task.subtasks!.map((s) =>
+                            s.id === sub.id
+                              ? {
+                                  ...s,
+                                  status: s.status === "Completed" ? "Backlog" : "Completed",
+                                }
+                              : s
+                          ),
+                        });
+                      }}
+                      className="h-4 w-4 cursor-pointer accent-green-500"
+                    />
+                    <span
+                      className={`${
+                        sub.status === "Completed" ? "line-through text-neutral-500" : ""
+                      }`}
+                    >
+                      {sub.title}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-4 text-sm text-neutral-400">
+                    <span className="px-2 py-1 rounded bg-neutral-700 text-xs">
+                      {sub.status}
+                    </span>
+                    <span>⏱ {sub.estimate ?? 0}h</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
           ) : (
             <p className="text-neutral-500">Sin subtareas</p>
           )}
